@@ -1,126 +1,29 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Cemetery {
-    private String name;
-    private String address;
-    public ArrayList<String> availableFlowers;
-    private ArrayList<Employee> employees;
-    private ArrayList<Service> services;
-
-    public Cemetery(String name, String address) {
-        this.name = name;
-        this.address = address;
-        this.availableFlowers = new ArrayList<>();
-        this.employees = new ArrayList<>();
-        this.services = new ArrayList<>();
-    }
-
-    public void addEmployee(Employee employee) {
-        employees.add(employee);
-    }
-
-    public void removeEmployee(Employee employee) {
-        employees.remove(employee);
-    }
-
-    public void addService(Service service) {
-        services.add(service);
-    }
-
-    public void removeService(Service service) {
-        services.remove(service);
-    }
-
-    public void addFlower(String flower) {
-        availableFlowers.add(flower);
-    }
-
-    public void displayEmployees() {
-        System.out.println("Сотрудники:");
-        for (int i = 0; i < employees.size(); i++) {
-            System.out.println((i+1) + ". " + employees.get(i));
-        }
-    }
-
-    public void displayServices() {
-        System.out.println("Услуги:");
-        for (int i = 0; i < services.size(); i++) {
-            System.out.println((i+1) + ". " + services.get(i));
-        }
-    }
-
-    public void removeEmployee(int index) {
-        if (index >= 0 && index < employees.size()) {
-            employees.remove(index);
-            System.out.println("Сотрудник удален успешно.");
-        } else {
-            System.out.println("Неправильный ввод.");
-        }
-    }
-
-    public void removeService(int index) {
-        if (index >= 0 && index < services.size()) {
-            services.remove(index);
-            System.out.println("Услуга удалена успешно.");
-        } else {
-            System.out.println("Неправильынй ввод.");
-        }
-    }
-
-    public void displayAddress() {
-        System.out.println("Адрес: " + address);
-    }
-}
-
-class Employee {
-    private String name;
-    private double salary;
-    private String position;
-
-    public Employee(String name, double salary, String position) {
-        this.name = name;
-        this.salary = salary;
-        this.position = position;
-    }
-
-    @Override
-    public String toString() {
-        return "Фио: " + name + ", Зарплата: " + salary + ", Должность: " + position;
-    }
-}
-
-class Service {
-    private String name;
-    private double cost;
-
-    public Service(String name, double cost) {
-        this.name = name;
-        this.cost = cost;
-    }
-
-    @Override
-    public String toString() {
-        return "Название: " + name + ", Цена: " + cost;
-    }
-}
-
 public class Main {
+
+    static ArrayList<String> availableFlowers = new ArrayList<>();
+    static ArrayList<String> employees = new ArrayList<>();
+    static ArrayList<String> services = new ArrayList<>();
+    static String cemeteryName;
+    static String cemeteryAddress;
+
     public static void main(String[] args) {
-        Cemetery cemetery = new Cemetery("Кладбище", "Метро Пыхтино");
-        cemetery.addFlower("Роза");
-        cemetery.addFlower("Гвоздика");
-        cemetery.addFlower("Тюльпаны");
-
-        cemetery.addEmployee(new Employee("Гвоздиков Н.В.", 2200.0, "Дворник"));
-        cemetery.addEmployee(new Employee("Грушин Н.В.", 1000000.0, "Директор"));
-        cemetery.addEmployee(new Employee("Якшин М.Е.", 1337.0, "Гробовщики"));
-
-        cemetery.addService(new Service("Захоронение", 2500.0));
-        cemetery.addService(new Service("Уборка на могиле", 1000.0));
-        cemetery.addService(new Service("Вознесение цветов", 300.0));
-
         Scanner scanner = new Scanner(System.in);
+
+        cemeteryName = "Кладбище";
+        cemeteryAddress = "Метро Пыхтино";
+        availableFlowers.add("Роза");
+        availableFlowers.add("Гвоздика");
+        availableFlowers.add("Тюльпаны");
+        employees.add("Гвоздиков Н.В., Зарплата: 2200.0, Должность: Дворник");
+        employees.add("Грушин Н.В., Зарплата: 1000000.0, Должность: Директор");
+        employees.add("Якшин М.Е., Зарплата: 1337.0, Должность: Гробовщики");
+        services.add("Захоронение, Цена: 2500.0");
+        services.add("Уборка на могиле, Цена: 1000.0");
+        services.add("Вознесение цветов, Цена: 300.0");
+
         int choice;
         do {
             System.out.println("\n1. Вывод сотрудников");
@@ -129,7 +32,7 @@ public class Main {
             System.out.println("4. Вывести услуги");
             System.out.println("5. Добавить услугу");
             System.out.println("6. Удалить услугу");
-            System.out.println("7. Вывести адрем");
+            System.out.println("7. Вывести адрес");
             System.out.println("8. Добавить цветы");
             System.out.println("9. Вывести список цветов");
             System.out.println("0. Выход");
@@ -139,31 +42,31 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    displayAllEmployees(cemetery);
+                    displayAllEmployees();
                     break;
                 case 2:
-                    addEmployeeWithInput(cemetery, scanner);
+                    addEmployeeWithInput(scanner);
                     break;
                 case 3:
-                    removeEmployeeByIndexWithInput(cemetery, scanner);
+                    removeEmployeeByIndexWithInput(scanner);
                     break;
                 case 4:
-                    displayAllServices(cemetery);
+                    displayAllServices();
                     break;
                 case 5:
-                    addServiceWithInput(cemetery, scanner);
+                    addServiceWithInput(scanner);
                     break;
                 case 6:
-                    removeServiceByIndexWithInput(cemetery, scanner);
+                    removeServiceByIndexWithInput(scanner);
                     break;
                 case 7:
-                    displayCemeteryAddress(cemetery);
+                    displayCemeteryAddress();
                     break;
                 case 8:
-                    addFlowerWithInput(cemetery, scanner);
+                    addFlowerWithInput(scanner);
                     break;
                 case 9:
-                    displayAvailableFlowers(cemetery);
+                    displayAvailableFlowers();
                     break;
                 case 0:
                     exitProgram();
@@ -176,7 +79,7 @@ public class Main {
         scanner.close();
     }
 
-    public static void addEmployeeWithInput(Cemetery cemetery, Scanner scanner) {
+    public static void addEmployeeWithInput(Scanner scanner) {
         System.out.print("Ввести имя сотрудника: ");
         String name = scanner.nextLine();
         System.out.print("Ввести зарплату: ");
@@ -184,53 +87,69 @@ public class Main {
         scanner.nextLine();
         System.out.print("Ввести должность: ");
         String position = scanner.nextLine();
-        Employee newEmployee = new Employee(name, salary, position);
-        cemetery.addEmployee(newEmployee);
+        employees.add("Фио: " + name + ", Зарплата: " + salary + ", Должность: " + position);
     }
 
-    public static void removeEmployeeByIndexWithInput(Cemetery cemetery, Scanner scanner) {
+    public static void removeEmployeeByIndexWithInput(Scanner scanner) {
         System.out.print("Введите индекс сотрудника которого нужно уволить: ");
         int empIndex = scanner.nextInt();
-        cemetery.removeEmployee(empIndex - 1);
+        scanner.nextLine();
+        if (empIndex >= 1 && empIndex <= employees.size()) {
+            employees.remove(empIndex - 1);
+            System.out.println("Сотрудник удален успешно.");
+        } else {
+            System.out.println("Неправильный ввод.");
+        }
     }
 
-    public static void addServiceWithInput(Cemetery cemetery, Scanner scanner) {
+    public static void addServiceWithInput(Scanner scanner) {
         System.out.print("Ввести название услуги: ");
         String serviceName = scanner.nextLine();
         System.out.print("Ввести цену услуги: ");
         double serviceCost = scanner.nextDouble();
         scanner.nextLine();
-        Service newService = new Service(serviceName, serviceCost);
-        cemetery.addService(newService);
+        services.add("Название: " + serviceName + ", Цена: " + serviceCost);
     }
 
-    public static void removeServiceByIndexWithInput(Cemetery cemetery, Scanner scanner) {
+    public static void removeServiceByIndexWithInput(Scanner scanner) {
         System.out.print("Введите индекс услуги для ее удаления: ");
         int serviceIndex = scanner.nextInt();
-        cemetery.removeService(serviceIndex - 1);
+        scanner.nextLine();
+        if (serviceIndex >= 1 && serviceIndex <= services.size()) {
+            services.remove(serviceIndex - 1);
+            System.out.println("Услуга удалена успешно.");
+        } else {
+            System.out.println("Неправильный ввод.");
+        }
     }
 
-    public static void displayCemeteryAddress(Cemetery cemetery) {
-        cemetery.displayAddress();
+    public static void displayCemeteryAddress() {
+        System.out.println("Адрес: " + cemeteryAddress);
     }
 
-    public static void displayAllEmployees(Cemetery cemetery) {
-        cemetery.displayEmployees();
+    public static void displayAllEmployees() {
+        System.out.println("Сотрудники:");
+        for (int i = 0; i < employees.size(); i++) {
+            System.out.println((i + 1) + ". " + employees.get(i));
+        }
     }
 
-    public static void displayAllServices(Cemetery cemetery) {
-        cemetery.displayServices();
+    public static void displayAllServices() {
+        System.out.println("Услуги:");
+        for (int i = 0; i < services.size(); i++) {
+            System.out.println((i + 1) + ". " + services.get(i));
+        }
     }
 
-    public static void addFlowerWithInput(Cemetery cemetery, Scanner scanner) {
+    public static void addFlowerWithInput(Scanner scanner) {
         System.out.print("Введите название цветов: ");
         String flowerName = scanner.nextLine();
-        cemetery.addFlower(flowerName);
+        availableFlowers.add(flowerName);
     }
 
-    public static void displayAvailableFlowers(Cemetery cemetery) {
+    public static void displayAvailableFlowers() {
         System.out.println("Цветы:");
-        for (String flower : cemetery.availableFlowers) {
+        for (String flower : availableFlowers) {
             System.out.println("- " + flower);
         }
     }
